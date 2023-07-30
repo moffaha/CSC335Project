@@ -1,12 +1,11 @@
-/** Author: Harvey Moffat
- *
- *  20/07/23
- *
- *  A class to get and set Node
+/**
+ *  Author: Harvey Moffat
+ *  30/07/23
+ *  A class to manage a graph with nodes and edges.
  */
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.HashMap;
 
 public class Graph {
     private Map<String, Node> nodes = new HashMap<>();

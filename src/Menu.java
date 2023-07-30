@@ -39,7 +39,9 @@ public class Menu extends JFrame implements ActionListener, KeyListener {
                 for (Component component : getContentPane().getComponents()) {
                     if (component instanceof JTextField) {
                         JTextField textField = (JTextField) component;
-                        textField.setText("Distance from " + input + " to " + textField.getText().substring(textField.getText().indexOf(" to ") + 4) + ": " + Dijkstra.shortestPath(graph, selectedNode).get(graph.getNode(textField.getText().substring(textField.getText().indexOf(" to ") + 4))));
+                        String textFieldText = textField.getText();
+                        String destinationNode = textFieldText.substring(textFieldText.indexOf(" to ") + 4);
+                        textField.setText("Distance from " + input + " to " + destinationNode + ": " + Dijkstra.shortestPath(graph, selectedNode).get(graph.getNode(destinationNode)));
                     }
                 }
             } else {
@@ -93,15 +95,23 @@ public class Menu extends JFrame implements ActionListener, KeyListener {
             y += 35;
         }
 
+
+
         // Add the input field for the user to choose the starting node
-        inputField = new JTextField("Enter starting node:");
-        inputField.setBounds(50, y, 150, 30);
-        inputField.addKeyListener(this); // Add the KeyListener to the input field
+        textField = new JTextField("Enter starting node:");
+        textField.setBounds(50, y, 150, 30);
+        textField.setEditable(false);
+        add(textField);
+
+        // Add the input field for the user to choose the starting node
+        inputField = new JTextField();
+        inputField.setBounds(200,y,50,30);
+        inputField.addKeyListener(this);
         add(inputField);
 
         // Add the select button
         selectButton = new JButton("Select");
-        selectButton.setBounds(210, y, 90, 30);
+        selectButton.setBounds(260, y, 90, 30);
         selectButton.addActionListener(this); // Add the ActionListener to the button
         add(selectButton);
 
@@ -125,8 +135,4 @@ public class Menu extends JFrame implements ActionListener, KeyListener {
     public void keyReleased(KeyEvent e) {
     }
 
-    public static void main(String[] args) {
-        Menu window = new Menu(600, 600);
-        window.setVisible(true);
-    }
 }

@@ -1,16 +1,15 @@
 /**
  *  Harvey Moffat
  *
- *  30/07/23
+ *  30/07/23 V2 same day
  *
  *  A class to add functionality to the display window
  */
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Map;
+import java.awt.event.*;
+import java.util.*;
 
 public class Menu extends JFrame implements ActionListener {
     // class variables
@@ -68,9 +67,13 @@ public class Menu extends JFrame implements ActionListener {
         menuItem.addActionListener(this);
         menu.add(menuItem);
 
-        // Display the distances from node A to all other nodes dynamically
+        // Sort the distances map based on the node IDs in alphabetical order
+        java.util.List<Node> sortedNodes = new ArrayList<>(distances.keySet());
+        Collections.sort(sortedNodes, Comparator.comparing(Node::getId));
+
+        // Display the distances from node A to all other nodes dynamically in alphabetical order
         int y = 50;
-        for (Node node : distances.keySet()) {
+        for (Node node : sortedNodes) {
             textField = new JTextField("Distance from A to " + node.getId() + ": " + distances.get(node));
             textField.setBounds(50, y, 250, 30);
             textField.setEditable(false);

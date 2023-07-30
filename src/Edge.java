@@ -1,14 +1,13 @@
-/** Author: Harvey Moffat
- *
- *  20/07/23
- *
- *  A class that links nodes with distance values
+/**
+ *  Author: Harvey Moffat
+ *  30/07/23
+ *  A class to represent an edge between two nodes in a graph with a given weight.
  */
 
 public class Edge {
-    private Node from;      // The starting node of the edge.
-    private Node to;        // The ending node of the edge.
-    private int weight;     // The weight or cost associated with the edge.
+    private Node from; // The starting node of the edge.
+    private Node to; // The ending node of the edge.
+    private int weight; // The weight or cost associated with the edge.
 
     // Constructor to create an edge between two nodes with a given weight.
     public Edge(Node from, Node to, int weight) {

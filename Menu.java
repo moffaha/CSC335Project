@@ -41,11 +41,21 @@ public class Menu extends JFrame implements ActionListener, KeyListener {
                     if (component instanceof JTextField) {
                         JTextField textField = (JTextField) component;
                         String textFieldText = textField.getText();
-                        String destinationNode = textFieldText.substring(textFieldText.lastIndexOf(" ") + 1);
-                        textField.setText("Distance from " + input + " to " + destinationNode + ": " + Dijkstra.shortestPath(graph, selectedNode).get(graph.getNode(destinationNode)));
+                        // Check if the text field contains the "Enter starting node:" text
+                        if (!textFieldText.equals("Enter starting node:")) {
+                            // Find the index of ":" to determine if it's a distance display text field
+                            int indexTo = textFieldText.indexOf(":");
+                            if (indexTo != -1) {
+                                // Extract the destination node ID from the text field
+                                String destinationNode = textFieldText.substring(textFieldText.indexOf(" to ") + 4, indexTo);
+                                // Update the text field with the new distance value
+                                textField.setText("Distance from " + input + " to " + destinationNode + ": " + Dijkstra.shortestPath(graph, selectedNode).get(graph.getNode(destinationNode)));
+                            }
+                        }
                     }
                 }
             } else {
+                // Display an error message if the selected node is not found
                 JOptionPane.showMessageDialog(this, "Node not found. Please enter a valid node ID.", "Invalid Node", JOptionPane.ERROR_MESSAGE);
             }
         }

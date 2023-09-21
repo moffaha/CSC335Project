@@ -8,11 +8,11 @@ import java.io.*;
 
 public class ReadCSV {
     public void readCSV(Graph graph, File file) {
-        String line = "";
+        String line = " ";
         String splitBy = ",";
         try {
             // parsing a CSV file into BufferedReader class constructor
-            BufferedReader br = new BufferedReader(new FileReader("test2.csv"));
+            BufferedReader br = new BufferedReader(new FileReader(file));
             while ((line = br.readLine()) != null) {   // returns a Boolean value
                 String[] data = line.split(splitBy);    // use comma as separator
                 String nodeID = data[0];

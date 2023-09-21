@@ -1,6 +1,6 @@
 /**
  *  Author: Harvey Moffat
- *  21/09/23
+ *  22/09/23
  *  A class to read data from a CSV file and construct a graph based on the data.
  */
 
@@ -11,14 +11,6 @@ public class ReadCSV {
         String line = "";
         String splitBy = ",";
         try {
-            if (file == null) {
-                throw new IllegalArgumentException("CSV file is null.");
-            }
-
-            if (!file.exists()) {
-                throw new FileNotFoundException("CSV file does not exist: " + file.getAbsolutePath());
-            }
-
             // parsing a CSV file into BufferedReader class constructor
             BufferedReader br = new BufferedReader(new FileReader("test2.csv"));
             while ((line = br.readLine()) != null) {   // returns a Boolean value

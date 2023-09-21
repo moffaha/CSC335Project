@@ -1,7 +1,7 @@
 /**
  *  Harvey Moffat
  *
- *  3/08/23 V2 same day
+ *  21/09/23
  *
  *  A class to add functionality to the display window
  */
@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
+import java.io.*;
 
 public class Menu extends JFrame implements ActionListener, KeyListener {
     // class variables
@@ -22,12 +23,38 @@ public class Menu extends JFrame implements ActionListener, KeyListener {
 
     Graph graph; // Reference to the graph
 
+    File csvFile;//Reference to file reader
+
     public void actionPerformed(ActionEvent e) {
         System.out.println(e);
         String cmd = e.getActionCommand();
         switch (cmd) {
             case "Quit":
                 System.exit(0); // close the window when the Quit menu item is selected
+                break;
+            case "Load CSV":
+                // Create a file dialog for loading a CSV file
+                FileDialog fileDialog = new FileDialog(this, "Load CSV File", FileDialog.LOAD);
+                fileDialog.setDirectory("H:\\");
+                fileDialog.setFile("*.csv"); // Set the file filter to only show CSV files
+                fileDialog.setVisible(true);
+
+                String selectedFile = fileDialog.getFile();
+                String directory = fileDialog.getDirectory();
+
+                if (selectedFile != null && directory != null) {
+                    File csvFile = new File(directory, selectedFile);
+
+                    if (csvFile.exists()) {
+                        ReadCSV readCSV = new ReadCSV();
+                        readCSV.readCSV(graph, csvFile);
+                    } else {
+                        System.err.println("CSV file does not exist: " + csvFile.getAbsolutePath());
+                    }
+                } else {
+                    System.err.println("No CSV file selected.");
+                }
+
                 break;
         }
 
@@ -72,7 +99,7 @@ public class Menu extends JFrame implements ActionListener, KeyListener {
 
         // Read data from CSV file and construct the graph
         ReadCSV readCSV = new ReadCSV();
-        readCSV.readCSV(graph);
+        readCSV.readCSV(graph, csvFile);
 
         menuBar = new JMenuBar();
         this.setJMenuBar(menuBar);
@@ -81,7 +108,7 @@ public class Menu extends JFrame implements ActionListener, KeyListener {
         menuBar.add(menu);
 
         // adding the dropdown menu options
-        menuItem = new JMenuItem("First Menu Item");
+        menuItem = new JMenuItem("Load CSV");
         menuItem.addActionListener(this);
         menu.add(menuItem);
         menuItem = new JMenuItem("Second Menu Item");

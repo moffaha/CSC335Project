@@ -10,9 +10,10 @@ public class ReadCSV {
     public void readCSV(Graph graph, File file) {
         String line = " ";
         String splitBy = ",";
+        File file1 = new File("test.csv");
         try {
             // parsing a CSV file into BufferedReader class constructor
-            BufferedReader br = new BufferedReader(new FileReader(file));
+            BufferedReader br = new BufferedReader(new FileReader(file1));
             while ((line = br.readLine()) != null) {   // returns a Boolean value
                 String[] data = line.split(splitBy);    // use comma as separator
                 String nodeID = data[0];

@@ -1,7 +1,7 @@
 /**
  *  Harvey Moffat
  *
- *  22/09/23
+ *  12/10/23
  *
  *  A class to add functionality to the display window
  */
@@ -24,7 +24,6 @@ public class Menu extends JFrame implements ActionListener, KeyListener {
     JButton selectEndNodeButton; // Button to select the ending node
 
     Graph graph; // Reference to the graph
-    File file; // Reference to file reader
 
     public void actionPerformed(ActionEvent e) {
         System.out.println(e);
@@ -48,13 +47,15 @@ public class Menu extends JFrame implements ActionListener, KeyListener {
 
                     if (csvFile.exists()) {
                         ReadCSV readCSV = new ReadCSV();
-                        readCSV.readCSV(graph, file);
+                        readCSV.readCSV(graph, csvFile); // Pass csvFile to the readCSV method
+                        updateTextFields(); // Update the text fields with the new data
                     }
                 } else {
                     System.err.println("No CSV file selected.");
                 }
 
                 break;
+
         }
 
         if (e.getSource() == selectButton) {
@@ -98,6 +99,65 @@ public class Menu extends JFrame implements ActionListener, KeyListener {
         }
     }
 
+    public void updateTextFields() {
+        // Clear all text fields
+        getContentPane().removeAll();
+        getContentPane().setLayout(null);
+
+        int y = 50;
+        for (Node node : graph.getNodes().values()) {
+            textField = new JTextField("Distance from A to " + node.getId() + ": " +
+                    Dijkstra.shortestPath(graph, graph.getNode("A")).get(node));
+            textField.setBounds(50, y, 250, 30);
+            textField.setEditable(false);
+            add(textField);
+            y += 35;
+        }
+
+        // Add the "Select starting node" fields and buttons
+        textField = new JTextField("Enter starting node:");
+        textField.setBounds(50, y, 150, 30);
+        textField.setEditable(false);
+        add(textField);
+
+        inputField = new JTextField();
+        inputField.setBounds(200, y, 50, 30);
+        inputField.addKeyListener(this);
+        add(inputField);
+        inputField.requestFocus();
+
+
+        selectButton = new JButton("Select");
+        selectButton.setBounds(260, y, 70, 30);
+        selectButton.addActionListener(this);
+        add(selectButton);
+        inputField.requestFocus();
+
+
+        // Add the "Select ending node" fields and buttons
+        textField = new JTextField("Enter end node:");
+        textField.setBounds(50, y + 35, 150, 30);
+        textField.setEditable(false);
+        add(textField);
+
+        endNodeInputField = new JTextField();
+        endNodeInputField.setBounds(200, y + 35, 50, 30);
+        endNodeInputField.addKeyListener(this);
+        add(endNodeInputField);
+        inputField.requestFocus();
+
+
+        selectEndNodeButton = new JButton("Select");
+        selectEndNodeButton.setBounds(260, y + 35, 70, 30);
+        selectEndNodeButton.addActionListener(this);
+        add(selectEndNodeButton);
+        inputField.requestFocus();
+
+
+        revalidate(); // Ensure the changes are reflected on the UI
+    }
+
+
     public Menu(int width, int height) {
         setTitle("Dijkstra's Menu");
         this.getContentPane().setPreferredSize(new Dimension(width, height));
@@ -105,7 +165,7 @@ public class Menu extends JFrame implements ActionListener, KeyListener {
 
         graph = new Graph();
         ReadCSV readCSV = new ReadCSV();
-        readCSV.readCSV(graph, file);
+
 
         menuBar = new JMenuBar();
         this.setJMenuBar(menuBar);
@@ -121,45 +181,6 @@ public class Menu extends JFrame implements ActionListener, KeyListener {
         menuItem.addActionListener(this);
         menu.add(menuItem);
 
-        int y = 50;
-        for (Node node : graph.getNodes().values()) {
-            textField = new JTextField("Distance from A to " + node.getId() + ": " +
-                    Dijkstra.shortestPath(graph, graph.getNode("A")).get(node));
-            textField.setBounds(50, y, 250, 30);
-            textField.setEditable(false);
-            add(textField);
-            y += 35;
-        }
-
-        textField = new JTextField("Enter starting node:");
-        textField.setBounds(50, y, 150, 30);
-        textField.setEditable(false);
-        add(textField);
-
-        inputField = new JTextField();
-        inputField.setBounds(200, y, 50, 30);
-        inputField.addKeyListener(this);
-        add(inputField);
-
-        selectButton = new JButton("Select");
-        selectButton.setBounds(260, y, 70, 30);
-        selectButton.addActionListener(this);
-        add(selectButton);
-
-        textField = new JTextField("Enter end node:");
-        textField.setBounds(50, y + 35, 150, 30);
-        textField.setEditable(false);
-        add(textField);
-
-        endNodeInputField = new JTextField();
-        endNodeInputField.setBounds(200, y + 35, 50, 30);
-        endNodeInputField.addKeyListener(this);
-        add(endNodeInputField);
-
-        selectEndNodeButton = new JButton("Select");
-        selectEndNodeButton.setBounds(260, y + 35, 70, 30);
-        selectEndNodeButton.addActionListener(this);
-        add(selectEndNodeButton);
 
         setLayout(null);
         this.pack();
@@ -179,9 +200,4 @@ public class Menu extends JFrame implements ActionListener, KeyListener {
     public void keyReleased(KeyEvent e) {
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            Menu menu = new Menu(400, 400);
-        });
-    }
 }

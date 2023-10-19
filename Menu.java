@@ -24,6 +24,7 @@ public class Menu extends JFrame implements ActionListener, KeyListener {
 
     Graph graph; // Reference to the graph
     File file;//Reference to file reader
+    Color neutral = new Color (238,238,238);
 
     public void actionPerformed(ActionEvent e) {
         System.out.println(e);
@@ -32,15 +33,26 @@ public class Menu extends JFrame implements ActionListener, KeyListener {
             case "Quit":
                 System.exit(0); // close the window when the Quit menu item is selected
                 break;
-            case "Dark mode":
+            case "Dark Grey":
+                // Change the background color to grey
+                getContentPane().setBackground(Color.DARK_GRAY);
+                break;
+            case "Grey":
                 // Change the background color to grey
                 getContentPane().setBackground(Color.GRAY);
                 break;
-            case "Light mode":
+            case "Light Grey":
+                // Change the background color back to white
+                getContentPane().setBackground(Color.LIGHT_GRAY);
+                break;
+            case "White":
                 // Change the background color back to white
                 getContentPane().setBackground(Color.WHITE);
                 break;
-
+            case "Neutral":
+                // Change the background color back to white
+                getContentPane().setBackground(neutral);
+                break;
         }
 
 
@@ -101,16 +113,31 @@ public class Menu extends JFrame implements ActionListener, KeyListener {
 
 
         // adding dropdown menu two
-        menu = new JMenu("View");
+        JMenu View = new JMenu("View");
         menuBar.add(menu);
 
-        JMenuItem changeColorMenuItem = new JMenuItem("Dark mode");
-        changeColorMenuItem.addActionListener(this);
-        menu.add(changeColorMenuItem);
-        // Add a menu item to change the background color back to white
-        JMenuItem changeToWhiteMenuItem = new JMenuItem("Light mode");
-        changeToWhiteMenuItem.addActionListener(this);
-        menu.add(changeToWhiteMenuItem);
+        menu = new JMenu("Background Colour");
+        View.add(menu);
+
+        menuItem  = new JMenuItem("Dark Grey");
+        menuItem.addActionListener(this);
+        menu.add(menuItem);
+
+        menuItem  = new JMenuItem("Grey");
+        menuItem.addActionListener(this);
+        menu.add(menuItem);
+
+        menuItem  = new JMenuItem("Light Grey");
+        menuItem.addActionListener(this);
+        menu.add(menuItem);
+        // Add a menu item to change the background color to white
+        menuItem  = new JMenuItem("White");
+        menuItem.addActionListener(this);
+        menu.add(menuItem);
+
+        menuItem  = new JMenuItem("Neutral");
+        menuItem.addActionListener(this);
+        menu.add(menuItem);
 
         // Display the distances from node A to all other nodes dynamically in alphabetical order
         int y = 50;

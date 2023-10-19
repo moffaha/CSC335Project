@@ -34,24 +34,28 @@ public class Menu extends JFrame implements ActionListener, KeyListener {
                 System.exit(0); // close the window when the Quit menu item is selected
                 break;
             case "Dark Grey":
-                // Change the background color to grey
+                // Change the background color to dark grey
                 getContentPane().setBackground(Color.DARK_GRAY);
                 break;
             case "Grey":
-                // Change the background color to grey
                 getContentPane().setBackground(Color.GRAY);
                 break;
             case "Light Grey":
-                // Change the background color back to white
                 getContentPane().setBackground(Color.LIGHT_GRAY);
                 break;
             case "White":
-                // Change the background color back to white
                 getContentPane().setBackground(Color.WHITE);
                 break;
             case "Neutral":
-                // Change the background color back to white
                 getContentPane().setBackground(neutral);
+                break;
+            case "How-To":
+                // Display a JOptionPane with tips and tricks
+                String howToMessage = "Here are some tips and tricks:\n"
+                        + "Open the View menu to change the background colour.\n"
+                        + "Enter the node you would like to start from to get distances to the other nodes.\n"
+                        + "- Tip 3: Try this out\n";
+                JOptionPane.showMessageDialog(null, howToMessage, "How-To", JOptionPane.INFORMATION_MESSAGE);
                 break;
         }
 
@@ -107,38 +111,45 @@ public class Menu extends JFrame implements ActionListener, KeyListener {
         menu = new JMenu("File");
         menuBar.add(menu);
 
-        // adding the dropdown menu option
-        menuItem = new JMenuItem("Quit");
-        menuItem.addActionListener(this);
-        menu.add(menuItem);
+            // adding the dropdown menu option
+            menuItem = new JMenuItem("Quit");
+            menuItem.addActionListener(this);
+            menu.add(menuItem);
 
 
         // adding dropdown menu two
         menu = new JMenu("View");
         menuBar.add(menu);
 
-        submenu = new JMenu("Background Colour");
-        menu.add(submenu);
+         submenu = new JMenu("Background Colour");
+         menu.add(submenu);
 
-        menuItem  = new JMenuItem("Dark Grey");
-        menuItem.addActionListener(this);
-        submenu.add(menuItem);
+            menuItem = new JMenuItem("Dark Grey");
+            menuItem.addActionListener(this);
+            submenu.add(menuItem);
 
-        menuItem  = new JMenuItem("Grey");
-        menuItem.addActionListener(this);
-        submenu.add(menuItem);
+            menuItem = new JMenuItem("Grey");
+            menuItem.addActionListener(this);
+            submenu.add(menuItem);
 
-        menuItem  = new JMenuItem("Light Grey");
-        menuItem.addActionListener(this);
-        submenu.add(menuItem);
-        // Add a menu item to change the background color to white
-        menuItem  = new JMenuItem("White");
-        menuItem.addActionListener(this);
-        submenu.add(menuItem);
+            menuItem = new JMenuItem("Light Grey");
+            menuItem.addActionListener(this);
+            submenu.add(menuItem);
+            // Add a menu item to change the background color to white
+            menuItem = new JMenuItem("White");
+            menuItem.addActionListener(this);
+            submenu.add(menuItem);
 
-        menuItem  = new JMenuItem("Neutral");
-        menuItem.addActionListener(this);
-        submenu.add(menuItem);
+            menuItem = new JMenuItem("Neutral");
+            menuItem.addActionListener(this);
+            submenu.add(menuItem);
+
+        menu = new JMenu("Help");
+        menuBar.add(menu);
+
+            menuItem = new JMenuItem("How-To");
+            menuItem.addActionListener(this);
+            menu.add(menuItem);
 
         // Display the distances from node A to all other nodes dynamically in alphabetical order
         int y = 50;

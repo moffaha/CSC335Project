@@ -16,7 +16,7 @@ import java.io.*;
 public class Menu extends JFrame implements ActionListener, KeyListener {
     // class variables
     JMenuBar menuBar;
-    JMenu menu;
+    JMenu menu, submenu;
     JMenuItem menuItem;
     JTextField textField;
     JTextField inputField; // Added JTextField for user input
@@ -102,6 +102,7 @@ public class Menu extends JFrame implements ActionListener, KeyListener {
 
         menuBar = new JMenuBar();
         this.setJMenuBar(menuBar);
+
         // adding dropdown menu one
         menu = new JMenu("File");
         menuBar.add(menu);
@@ -113,31 +114,31 @@ public class Menu extends JFrame implements ActionListener, KeyListener {
 
 
         // adding dropdown menu two
-        JMenu View = new JMenu("View");
+        menu = new JMenu("View");
         menuBar.add(menu);
 
-        menu = new JMenu("Background Colour");
-        View.add(menu);
+        submenu = new JMenu("Background Colour");
+        menu.add(submenu);
 
         menuItem  = new JMenuItem("Dark Grey");
         menuItem.addActionListener(this);
-        menu.add(menuItem);
+        submenu.add(menuItem);
 
         menuItem  = new JMenuItem("Grey");
         menuItem.addActionListener(this);
-        menu.add(menuItem);
+        submenu.add(menuItem);
 
         menuItem  = new JMenuItem("Light Grey");
         menuItem.addActionListener(this);
-        menu.add(menuItem);
+        submenu.add(menuItem);
         // Add a menu item to change the background color to white
         menuItem  = new JMenuItem("White");
         menuItem.addActionListener(this);
-        menu.add(menuItem);
+        submenu.add(menuItem);
 
         menuItem  = new JMenuItem("Neutral");
         menuItem.addActionListener(this);
-        menu.add(menuItem);
+        submenu.add(menuItem);
 
         // Display the distances from node A to all other nodes dynamically in alphabetical order
         int y = 50;
